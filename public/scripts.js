@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const deleteButton = document.createElement('button');
     deleteButton.textContent = "Delete task";
-    deleteButton.onclick = function() {deleteTask(task._id); };
+    deleteButton.onclick = function() {deleteTask(task); };
 
     li.appendChild(statusButton);
     li.appendChild(deleteButton);
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function changeTaskStatus(task) {
-    taskId = task._id
+    let taskId = task._id
     const currentStatus = task.status;
     const nextStatus = currentStatus === 'open' ? 'in progress' : currentStatus === 'in progress' ? 'done' : 'open';
     
@@ -66,13 +66,18 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(error => console.error('Error:', error));
   }
 
-  function deleteTask(taskId) {
+  function deleteTask(task) {
+    let taskId = task._id
+    const userResponse = window.confirm('Are you sure you want to delete the task named "' + task.name + '"?');
+    if (userResponse === true) {
+
     fetch(`/tasks/${taskId}`, {
         method: "DELETE"
     })
     .then(updatedTasks => {
         loadTasks()
     })
+}
   }
   
   function clearTaskList() {
