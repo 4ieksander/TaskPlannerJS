@@ -25,11 +25,18 @@ document.addEventListener('DOMContentLoaded', function() {
   function addTaskToList(task) {
     const li = document.createElement('li');
     li.textContent = `${task.name}: ${task.description} (${task.status}) `;
+
     const statusButton = document.createElement('button');
     statusButton.textContent = 'Change Status';
     statusButton.onclick = function() { changeTaskStatus(task); };
     
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = "Delete task";
+    deleteButton.onclick = function() {deleteTask(task._id); };
+
     li.appendChild(statusButton);
+    li.appendChild(deleteButton);
+
     taskList.appendChild(li);
  
     if (task.status === 'done') {
@@ -53,19 +60,28 @@ document.addEventListener('DOMContentLoaded', function() {
       body: JSON.stringify({ status: nextStatus })
     })
     .then(response => response.json())
-    .then(updatedTask => {
-        clearTaskList()
+    .then(updatedTasks => {
         loadTasks()
     })
     .catch(error => console.error('Error:', error));
   }
 
+  function deleteTask(taskId) {
+    fetch(`/tasks/${taskId}`, {
+        method: "DELETE"
+    })
+    .then(updatedTasks => {
+        loadTasks()
+    })
+  }
+  
   function clearTaskList() {
     const taskList = document.getElementById('taskList');
     taskList.innerHTML = ''; // Wyczyść zawartość listy
   }
 
   function loadTasks() {
+    clearTaskList()
     fetch('/tasks')
     .then(response => response.json())
     .then(tasks => {
