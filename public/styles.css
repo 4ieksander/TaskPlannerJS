@@ -13,7 +13,14 @@ body {
   #taskList li {
     margin: 10px 0;
     padding: 10px;
-    background-color: lightgray;
+    background: lightgray;
     border-radius: 4px;
   }
   
+  .done-task-class {
+    background-color: green !important;
+  }
+
+  .in-progress-task-class {
+    background-color: yellow !important;
+  }

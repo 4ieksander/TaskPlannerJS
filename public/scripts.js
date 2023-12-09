@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     li.appendChild(statusButton);
     taskList.appendChild(li);
+ 
+    if (task.status === 'done') {
+        li.classList.add('done-task-class')
+    } else if (task.status === 'in progress'){
+        li.classList.add('in-progress-task-class')
+    }
+
   }
 
   function changeTaskStatus(task) {
