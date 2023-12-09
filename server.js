@@ -5,7 +5,7 @@ const mongoose = require('./db.js');
 const taskRoutes = require('./routes/tasks');
 
 app.use(express.json());
-
+app.use(express.static('public'))
 app.use(taskRoutes);
 
 app.get('/', (req, res) => {
